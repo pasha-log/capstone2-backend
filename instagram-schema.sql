@@ -13,6 +13,7 @@ CREATE TABLE follows (
     REFERENCES users ON DELETE CASCADE,
   user_following_id INTEGER
     REFERENCES users ON DELETE CASCADE
+  PRIMARY KEY (user_being_followed_id, user_following_id)
 )
 
 CREATE TABLE likes (
@@ -24,12 +25,12 @@ CREATE TABLE likes (
 )
 
 CREATE TABLE comments (
+  comment_id INTEGER PRIMARY KEY,
   user_id INTEGER
     REFERENCES users ON DELETE CASCADE,
   photo_id INTEGER 
     REFERENCES photos ON DELETE CASCADE,
   comment TEXT,
-  PRIMARY KEY (user_id, photo_id)
 )
 
 CREATE TABLE photos (

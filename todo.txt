@@ -1,0 +1,53 @@
+Decide what not to do. 
+Decide what to do. 
+How big or small? 
+
+Will the UI be identical? Or some improvements? 
+If there is an improvement, create a figma template for just the one thing. 
+How closely is the CSS being followed? 
+Will it be mobile version? Both? 
+
+Can comments be liked? 
+Can comments be commented on? 
+
+Then make SQL schema. 
+Sequelize.js (SQALchemy for JS) not necessary but worth to check out. 
+Otherwise React and Node. Look into component libraries like bootstrap, materialUI. 
+Deploy frontend on GH-pages (even if blank). Backend - look for free deployment options. 
+Use CRA. 
+Node - express. Express generator (a starter) 
+
+Web manifests - for accessing camera for mobile version. 
+
+Include: 
+desktop version -
+* Landing page with login/signup should be almost identical 
+* No stories (because I don't have enough time)
+* Like comments and comment on comments
+* Double tapping for liking photo 
+* A save button to save all the favorite photos
+* Hovering on photo on profile would should show amount of likes and comments 
+* There should be an edit profile button - can edit name, username, bio, email (gender, phone number, and website don't seem necessary to me)
+* Home, search, notifications, create, and profile button on the side. No explore page because it could require extra attention and wouldn't be necessary because of the lack of users
+on this simple version. I think a home page with all your followers will do.  
+* Profile should show number of followers, posts, and follows. 
+* Hovering on profile photo should be able to show that you can click and edit. When clicked on, you can remove or upload new photo. 
+* When adding a photo, maybe figure out how to crop a photo? Add more than one photo? Maybe figure out how to add a few basic filters? 
+Tag someone in the end, by search. And add caption. Probably won't add location because that would involve more work like implementing a Google maps feature. 
+* Adding a photo would involve accessing computer's files.
+* There won't be a messaging feature, although in the future that could be an option. 
+
+feature I would like to add: 
+to help prevent independant artist copyright issues, I could perhaps add a nice optional feature where person can add a watermark with their name that is either subtle or more
+obvious. 
+
+mobile version - 
+* navigation bar would be on bottom (home, search, create, and profile button)
+* Would be cool to learn how implement a swiping feature for creating a new post if I have enough time. But the priority would be to just have the create button on the
+nav bar. 
+* I'm not including the reels, story, or live features because that would be more complex. But to be able to have the create button show the gallery of the phone would be 
+nice, but I'm not sure how hard that would be. In this way, there could be a button for the camera. If accessing the gallery of the phone is too complex, then the create button
+should just take you to the front camera (and a button for the back camera as well) 
+
+Hardest features: 
+* Being able to access the files of the computer, accessing the camera, and having comment chaining for posts.
