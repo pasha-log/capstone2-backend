@@ -8,16 +8,16 @@ The objective is to create an Instagram clone with nearly identical UI and a few
 
 <img src='./project-proposal-photos/Screenshot (119).png' alt=''>
 
-* Landing page with login/signup should be almost identical, only without the automatic sign-in (continue as grammarcommie). I will figure out how to use a picture of a phone with a wigdet that changes its screen every couple of seconds in a loop. Everything that won't be included on this page: (change of language, the entire bottom nav bar, options to download from Google Play or Microsoft). Those features are for a real application, not a clone.
+* Landing page with login/signup should be almost identical, only without the automatic sign-in (continue as grammarcommie). I will figure out how to use a picture of a phone with screenshots of the app that changes every couple of seconds in a loop. Everything that won't be included on this page: (change of language, the entire bottom nav bar, options to download from Google Play or Microsoft). Those features are for a real application, not a clone.
 
 #### Homepage 
 
 <img src='./project-proposal-photos/Screenshot (110).png' alt=''>
 
-* No stories (that would be a complex feature I'd implement in the future, but for now just sharing photos will do).
-* Double tapping for liking photo (a defining feature of Instagram).
-* A save button to save all the favorite photos (saved photos can be found in the profile).
-* Home, profile search, notifications, create, and profile button on the side. No explore page because it could require extra attention and wouldn't be necessary because of the lack of users
+* No stories (that would be a complex feature I'd implement in the future, but for now just sharing photos will do which is how the original instagram used to be).
+* Double tapping for liking photo (one of the defining features of Instagram).
+* No save buttons (I think having likes in your profile settings is enough for "saving" things you like)
+* Home, profile search, notifications, create, and profile button on the left side. No explore page because it could require extra attention and wouldn't be necessary because of the lack of users. Should there be suggestions on the right side?
 * There won't be a messaging feature, although in the future that could be an option. 
 * Like comments and comment on comments
 
@@ -29,11 +29,11 @@ The objective is to create an Instagram clone with nearly identical UI and a few
 
 <img src='./project-proposal-photos/Screenshot (114).png' alt=''>
 
-* When adding a photo, maybe figure out how to crop a photo? Add more than one photo?
+* When adding a photo, maybe figure out how to crop a photo? Add more than one photo? Or automatically adjust to show the full photo?
 
 <img src='./project-proposal-photos/Screenshot (115).png' alt=''>
 
-* Maybe figure out how to add a few basic filters? 
+* Maybe figure out how to add a few basic filters? Black & white, lark, slumber e.g.
 
 <img src='./project-proposal-photos/Screenshot (116).png' alt=''>
 
@@ -41,15 +41,14 @@ The objective is to create an Instagram clone with nearly identical UI and a few
 
 <img src='./project-proposal-photos/Screenshot (117).png' alt=''>
 
-* Backing back out of the post creation mode would ask to discard photo. 
+* Backing back out of the post creation mode would ask to discard photo. You can also do this by clicking anywhere outside of the photo adding part, or clicking on the X top right.
 
 #### Profile Page
 
 <img src='./project-proposal-photos/Screenshot (111).png' alt=''>
 
 * Hovering on photo on profile would should show amount of likes and comments 
-* There should be an edit profile button - can edit name, username, bio, email (gender, phone number, and website don't seem necessary to me 
-on this simple version) I think a home page with all your followers will do.  
+* There should be an edit profile button - can edit name, username, bio, email (gender, phone number, and website don't seem necessary to me on this simple version).   
 * Profile should show number of followers, posts, and follows. 
 * Hovering on profile photo should be able to show that you can click and edit. When clicked on, you can remove or upload new photo. 
 

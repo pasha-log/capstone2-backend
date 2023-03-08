@@ -18,9 +18,9 @@ CREATE TABLE follows (
 
 CREATE TABLE likes (
   user_id INTEGER
-    REFERENCES users ON DELETE CASCADE,
+    REFERENCES users,
   photo_id INTEGER 
-    REFERENCES photos ON DELETE CASCADE,
+    REFERENCES photos,
   PRIMARY KEY (user_id, photo_id)
 )
 
