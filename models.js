@@ -102,8 +102,7 @@ const CommentLikes = sequelize.define('CommentLikes', {
 		references: {
 			model: 'Users',
 			key: 'user_id'
-		},
-		onDelete: 'CASCADE'
+		}
 	},
 	comment_id: {
 		type: DataTypes.INTEGER,
@@ -111,8 +110,7 @@ const CommentLikes = sequelize.define('CommentLikes', {
 		references: {
 			model: 'Comments',
 			key: 'comment_id'
-		},
-		onDelete: 'CASCADE'
+		}
 	}
 });
 
@@ -134,8 +132,7 @@ const Comments = sequelize.define(
 			references: {
 				model: 'Users',
 				key: 'user_id'
-			},
-			onDelete: 'CASCADE'
+			}
 		},
 		post_id: {
 			type: DataTypes.INTEGER,
