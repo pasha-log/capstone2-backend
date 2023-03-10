@@ -12,12 +12,13 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
+    "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.29.1",
-    "sqlite3": "^5.1.4"
+    "sequelize-cli": "^6.6.0"
   },
   "description": "## Database Schema",
   "main": "app.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pasha-log/instagram-clone-backend.git"
@@ -28,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/pasha-log/instagram-clone-backend/issues"
   },
-  "homepage": "https://github.com/pasha-log/instagram-clone-backend#readme"
+  "homepage": "https://github.com/pasha-log/instagram-clone-backend#readme",
+  "devDependencies": {}
 }

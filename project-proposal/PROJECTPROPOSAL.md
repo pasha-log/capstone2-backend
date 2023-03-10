@@ -38,6 +38,7 @@ The objective is to create an Instagram clone with nearly identical UI and a few
 <img src='./project-proposal-photos/Screenshot (116).png' alt=''>
 
 * Tag someone in the end, by search. And add caption. Probably won't add location because that would involve more work like implementing a Google maps feature. And no "Accessibility" or "Advanced settings".
+* I won't add the feature of making clickable hashtags for now. This would be a cool feature to implement, however it would be time-consuming.
 
 <img src='./project-proposal-photos/Screenshot (117).png' alt=''>
 
@@ -81,3 +82,15 @@ nice, but I'm not sure how hard that would be. In this way, there could be a but
 <img src='./project-proposal-photos/Screenshot (120).png' alt=''>
 
 The feature I'd like to add is the optional addition of watermark generator to help independant artists avoid copyright issues and prevent other users from stealing their work. User can have an drop down of font styles to choose from and can type in whatever name they want. The watermark would appear at the bottom right corner. 
+
+## Routes: 
+
+* GET all users 
+* GET user by username 
+* POST new photo by username 
+* PATCH username's profile info 
+* POST like comment or photo 
+* POST comment on photo 
+* POST follow new account 
+* DELETE a post 
+* PATCH change a password
