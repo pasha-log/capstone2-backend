@@ -2,4 +2,4 @@
 
 ## Database Schema 
 
-[DDL](https://drive.google.com/file/d/142WVGPtkn2-O7khUKFC93qKEQI642q7H/view?usp=sharing)
+[DDL](https://drive.google.com/file/d/1PqLgji3S31GIKA6EGZa5SwTGlfmEwrVI/view?usp=sharing)
