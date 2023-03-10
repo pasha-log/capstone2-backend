@@ -1,6 +1,9 @@
+require('dotenv').config();
+const password = process.env.UBUNTU_PASSWORD;
+
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize('postgres://pasha:UbunVegan1242!@127.0.0.1:5432/instagram');
+const sequelize = new Sequelize(`postgres://pasha:${password}@127.0.0.1:5432/instagram`);
 
 const Users = sequelize.define('Users', {
 	user_id: {

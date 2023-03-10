@@ -85,12 +85,15 @@ The feature I'd like to add is the optional addition of watermark generator to h
 
 ## Routes: 
 
+All routes need to ensure that user is signed in.
 * GET all users 
-* GET user by username 
-* POST new photo by username 
+* GET user profile by username (should include user's likes, comments, posts, follows, and followers)
+* GET user post detail by post id (should include post's likes, comments)
+* POST create new post by user_id
 * PATCH username's profile info 
-* POST like comment or photo 
-* POST comment on photo 
-* POST follow new account 
-* DELETE a post 
 * PATCH change a password
+* POST like post by user_id
+* POST like comment by user_id
+* POST comment on photo or comment
+* POST follow new account by user_id
+* DELETE a post 
