@@ -397,3 +397,37 @@ describe('liking', function() {
 		});
 	});
 });
+
+/************************************** like */
+
+describe('commenting', function() {
+	test('works for commenting on a post', async function() {
+		const newComment = {
+			username: 'u1',
+			postId: 2,
+			parentId: -1,
+			message: 'nice post, u2!'
+		};
+		const comment = await User.comment({ ...newComment });
+		const res = await db.query(
+			`SELECT comment_id AS "commentId", parent_id AS "parentId", message, created_at AS "createdAt", username, post_id AS "postId" FROM comments WHERE username='u1'`
+		);
+		expect(res.rows.length).toEqual(1);
+		expect(res.rows[0]).toEqual(comment);
+	});
+
+	test('works for replying to a comment', async function() {
+		const newComment = {
+			username: 'u2',
+			postId: 2,
+			parentId: 2,
+			message: 'thank you, u1!'
+		};
+		const comment = await User.comment({ ...newComment });
+		const res = await db.query(
+			`SELECT comment_id AS "commentId", parent_id AS "parentId", message, created_at AS "createdAt", username, post_id AS "postId" FROM comments WHERE comment_id=3`
+		);
+		expect(res.rows.length).toEqual(1);
+		expect(res.rows[0]).toEqual(comment);
+	});
+});

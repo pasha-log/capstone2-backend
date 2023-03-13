@@ -376,6 +376,27 @@ class User {
 					[ username, commentOrPostId ]
 				);
 	}
+
+	/** Make a comment on a post or another comment.
+	* 
+	* Returns comment
+	**/
+
+	static async comment({ username, postId, parentId, message }) {
+		const result = await db.query(
+			`INSERT INTO comments
+			(parent_id,
+				message,
+				username,
+				post_id)
+			VALUES ($1, $2, $3, $4)
+			RETURNING comment_id AS "commentId", parent_id AS "parentId", message, created_at AS "createdAt", username, post_id AS "postId"`,
+			[ parentId, message, username, postId ]
+		);
+
+		const comment = result.rows[0];
+		return comment;
+	}
 }
 
 // TODO: need to see all users comments through get(username)
@@ -383,5 +404,7 @@ class User {
 // ALSO: users need to be able to see all their followers and their posts.
 // ALSO: user needs to be able to see any of their comments and likes
 // ALSO: user needs to be able to delete a post or comment.
+// ALSO: user needs to be able to edit a post, comment, and unlike a post or comment.
 // Should we be able to update username and ON UPDATE CASCADE everywhere? New test for update?
+// Should every method check if username exists? Create a helper function?
 module.exports = User;
