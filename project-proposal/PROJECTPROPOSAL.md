@@ -97,8 +97,11 @@ All routes need to ensure that user is signed in.
 
 ## Things I'm Not So Sure About:
 * Should I include how many weeks, days, or hours ago a comment, a follow, and a post has been made like in the original Instagram? I'm not sure how simple or easy that is. 
-* Should I allow clickable tags to be added for every post made? That is, when a post has relevant hashtags in its caption, should the tags lead to a page with all other posts with the same tag? It sounds easy to implement. Maybe I should include such a feature because it is so characteristic of Instagram.
+* Should I allow clickable tags to be added for every post made? That is, when a post has relevant hashtags in its caption, should the tags lead to a page with all other posts with the same tag? It sounds easy to implement. Maybe I should include such a feature because it is so characteristic of Instagram. But on the other hand, it could be tediuos and extra.
 * How hard would it be to tag any part of a photo with a user? And let a label show up whenever the photo is tapped? This would probably involve another data table referencing a post, user, and involving the coordinates of a photo (this could be time consuming but really cool, but not a priority right now).
+* I need to figure out how the instagram loading bar is made. 
+* How would I make it so user sees everytime some other user interacts with their account like liking or commenting on their posts? 
+* How exactly would a user await on another user following them back? 
 
 ## Hardest Features To Think About: 
 * Being able to access the files of the computer, accessing the camera, and having comment chaining for posts.
