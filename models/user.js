@@ -120,7 +120,6 @@ class User {
    *   where postLikes is [{ postId, username, postURL, caption, watermark, filter, createdAt }, ...]
    *   where following is [{username, fullName, profileImageURL}, ...]
    *   where followers is [{username, fullName, profileImageURL}, ...]
-   *   TODO: where comments are [{...}, ...]
    * 
    * Throws NotFoundError if user not found.
    **/
@@ -386,25 +385,120 @@ class User {
 		const result = await db.query(
 			`INSERT INTO comments
 			(parent_id,
-				message,
-				username,
-				post_id)
+			message,
+			username,
+			post_id)
 			VALUES ($1, $2, $3, $4)
-			RETURNING comment_id AS "commentId", parent_id AS "parentId", message, created_at AS "createdAt", username, post_id AS "postId"`,
+			RETURNING comment_id AS "commentId", 
+			parent_id AS "parentId", 
+			message, 
+			created_at AS "createdAt", 
+			username,
+			post_id AS "postId"`,
 			[ parentId, message, username, postId ]
 		);
 
 		const comment = result.rows[0];
 		return comment;
 	}
+
+	/** Get user's comments.
+	* 
+	* Should look like this: {username, comments},
+	* where comments are [{commentId, parentId, message, createdAt, postId, likes}, ...]
+	* 
+	* Returns comment
+	**/
+
+	static async getUserComments(username) {
+		let userComments = { username: username };
+		const result = await db.query(
+			`SELECT c.comment_id AS "commentId",
+			c.parent_id AS "parentId",
+			c.message,
+			c.created_at AS "createdAt",
+			c.post_id AS "postId",
+			SUM(CASE WHEN c.comment_id = l.comment_id THEN 1 ELSE 0 END) AS "likes"
+			FROM comments c
+			JOIN comment_likes l 
+			ON c.comment_id = l.comment_id
+			WHERE c.username=$1
+			GROUP BY c.comment_id;`,
+			[ username ]
+		);
+
+		userComments.comments = result.rows;
+		return userComments;
+	}
+
+	/** Get a specific post's details.
+	* 
+	* Should look like this: {postId, postURL, caption, watermark, watermarkFont, filter, createdAt, username, postLikes, comments},
+	* 	where postLikes are [{username}, ...]
+	* 	where comments are [{commentId, parentId, message, createdAt, likes}, ...]
+	*	
+	* Returns post
+	**/
+
+	static async getPost(postId) {
+		const postRes = await db.query(
+			`SELECT post_id AS "postId",
+            post_url AS "postURL",
+            caption,
+            watermark,
+            watermark_font AS "watermarkFont",
+			filter,
+			created_at AS "createdAt",
+            username
+           	FROM posts
+           	WHERE post_id = $1`,
+			[ postId ]
+		);
+
+		const post = postRes.rows[0];
+
+		if (!post) throw new NotFoundError(`No post: ${postId}`);
+
+		const postLikesRes = await db.query(
+			`SELECT COUNT(*) as "likes"
+			FROM post_likes
+			WHERE post_id = $1`,
+			[ postId ]
+		);
+
+		post.postLikes = postLikesRes.rows[0];
+
+		const commentsRes = await db.query(
+			`SELECT c.comment_id AS "commentId",
+			c.parent_id AS "parentId", 
+			c.message, 
+			c.created_at AS "createdAt",
+			SUM(CASE WHEN c.comment_id = l.comment_id THEN 1 ELSE 0 END) AS "likes" 
+			FROM comments c
+			JOIN posts p
+			ON c.post_id = p.post_id
+			JOIN comment_likes l
+			ON c.comment_id = l.comment_id
+			WHERE p.post_id = $1
+			GROUP BY c.comment_id, p.post_id`,
+			[ postId ]
+		);
+
+		post.comments = commentsRes.rows;
+
+		return post;
+	}
 }
 
-// TODO: need to see all users comments through get(username)
-// TODO: we still need user to make comments on posts AND comments.
-// ALSO: users need to be able to see all their followers and their posts.
-// ALSO: user needs to be able to see any of their comments and likes
+// Get specific post and it's comments?
+// ALSO: user needs to be able to see any of their comments
 // ALSO: user needs to be able to delete a post or comment.
 // ALSO: user needs to be able to edit a post, comment, and unlike a post or comment.
 // Should we be able to update username and ON UPDATE CASCADE everywhere? New test for update?
 // Should every method check if username exists? Create a helper function?
+// Soft versus hard delete - try to get rid of most of the ON DELETE CASCADEs
+// Fix the test common
+// Finish the getComments and getPost (try to make one of them recursive)
+// Start working on the basic frontend things 
+
 module.exports = User;

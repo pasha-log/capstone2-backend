@@ -102,6 +102,7 @@ All routes need to ensure that user is signed in.
 * I need to figure out how the instagram loading bar is made. 
 * How would I make it so user sees everytime some other user interacts with their account like liking or commenting on their posts? 
 * How exactly would a user await on another user following them back? 
+* How do log notifications for every user? When someone likes their photo, comments on their photo, likes their comment, tags them.
 
 ## Hardest Features To Think About: 
 * Being able to access the files of the computer, accessing the camera, and having comment chaining for posts.

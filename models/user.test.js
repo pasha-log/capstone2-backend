@@ -3,8 +3,14 @@
 const { NotFoundError, BadRequestError, UnauthorizedError } = require('../expressError');
 const db = require('../db.js');
 const User = require('./user.js');
-const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll, testCreatedAt } = require('./_testCommon');
-const { register, createPost } = require('./user.js');
+const {
+	commonBeforeAll,
+	commonBeforeEach,
+	commonAfterEach,
+	commonAfterAll,
+	testPostsCreatedAt,
+	testCommentsCreatedAt
+} = require('./_testCommon');
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -153,7 +159,7 @@ describe('get', function() {
 					caption: 'a fake post by u1',
 					watermark: null,
 					filter: null,
-					createdAt: testCreatedAt[0]
+					createdAt: testPostsCreatedAt[0]
 				}
 			],
 			postLikes: [
@@ -165,7 +171,7 @@ describe('get', function() {
 					caption: 'a fake post by u1',
 					watermark: null,
 					filter: null,
-					createdAt: testCreatedAt[0]
+					createdAt: testPostsCreatedAt[0]
 				},
 				{
 					postId: 2,
@@ -175,7 +181,7 @@ describe('get', function() {
 					caption: 'a fake post by u2',
 					watermark: null,
 					filter: null,
-					createdAt: testCreatedAt[1]
+					createdAt: testPostsCreatedAt[1]
 				}
 			],
 			following: [
@@ -425,9 +431,58 @@ describe('commenting', function() {
 		};
 		const comment = await User.comment({ ...newComment });
 		const res = await db.query(
-			`SELECT comment_id AS "commentId", parent_id AS "parentId", message, created_at AS "createdAt", username, post_id AS "postId" FROM comments WHERE comment_id=3`
+			`SELECT comment_id AS "commentId", parent_id AS "parentId", message, created_at AS "createdAt", username, post_id AS "postId" FROM comments WHERE message='thank you, u1!'`
 		);
 		expect(res.rows.length).toEqual(1);
 		expect(res.rows[0]).toEqual(comment);
+	});
+});
+
+/************************************** getUserComments */
+
+describe('getting all of specific user comments', function() {
+	test('works for comments with likes', async function() {
+		await User.like('u1', 1, { type: 'comment' });
+		await User.like('u1', 2, { type: 'comment' });
+		await User.like('u3', 1, { type: 'comment' });
+		await User.like('u3', 2, { type: 'comment' });
+		await User.like('u4', 2, { type: 'comment' });
+		let user = await User.getUserComments('u2');
+		expect(user).toEqual({
+			username: 'u2',
+			comments: [
+				{
+					commentId: 1,
+					parentId: -1,
+					message: 'nice post, u1!',
+					createdAt: testCommentsCreatedAt[0],
+					postId: 1,
+					likes: '2'
+				},
+				{
+					commentId: 2,
+					parentId: -1,
+					message: 'here are some hashtags I forgot!',
+					createdAt: testCommentsCreatedAt[1],
+					postId: 2,
+					likes: '3'
+				}
+			]
+		});
+	});
+
+	test('works for comments without likes', async function() {
+		const newComment = {
+			username: 'u3',
+			postId: '1',
+			parentId: -1,
+			message: 'yeah, u1, what a great post!'
+		};
+		const comment = await User.comment({ ...newComment });
+		const userU3Comment = await User.getUserComments('u3');
+		expect(userU3Comment).toEqual({
+			username: 'u3',
+			comments: [ comment ]
+		});
 	});
 });

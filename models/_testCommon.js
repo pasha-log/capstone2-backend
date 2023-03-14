@@ -3,11 +3,10 @@ const bcrypt = require('bcrypt');
 const db = require('../db.js');
 const { BCRYPT_WORK_FACTOR } = require('../config');
 
-const testCreatedAt = [];
+const testPostsCreatedAt = [];
+const testCommentsCreatedAt = [];
 
 async function commonBeforeAll() {
-	await db.query('DELETE FROM users');
-
 	await db.query(
 		`
         INSERT INTO users(username,
@@ -45,7 +44,7 @@ async function commonBeforeAll() {
 		('u3', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc14uK4IYYBB8TU2JnCEmxKMeGEbfw_flCuQ&usqp=CAU', 'a fake post by u3')
 		RETURNING created_at`
 	);
-	testCreatedAt.splice(0, 0, ...resultsPosts.rows.map((r) => r.created_at));
+	testPostsCreatedAt.splice(0, 0, ...resultsPosts.rows.map((r) => r.created_at));
 
 	// u1 will like u2's post and their own post
 	await db.query(
@@ -54,12 +53,14 @@ async function commonBeforeAll() {
 		VALUES ('u1', 1), ('u1', 2)`
 	);
 
-	// u2 will make a comment on u1's post and u1 will like it
-	await db.query(
+	// u2 will make a comment on u1's post and u1 will like it, and u2 will comment on their own post
+	const resultsComments = await db.query(
 		`
 		INSERT INTO comments(message, username, post_id)
-		VALUES ('nice post, u1!', 'u2', '1')`
+		VALUES ('nice post, u1!', 'u2', '1'), ('here are some hashtags I forgot!', 'u2', '2')
+		RETURNING created_at`
 	);
+	testCommentsCreatedAt.splice(0, 0, ...resultsComments.rows.map((r) => r.created_at));
 }
 
 async function commonBeforeEach() {
@@ -79,5 +80,6 @@ module.exports = {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
-	testCreatedAt
+	testPostsCreatedAt,
+	testCommentsCreatedAt
 };
