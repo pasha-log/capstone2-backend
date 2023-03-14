@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Registration Schema",
+  "required": [
+      "username",
+      "password",
+      "fullName",
+      "email",
+      "bio"
+  ],
+  "properties": {
+      "username": {
+          "type": "string",
+          "default": "",
+          "title": "The username Schema",
+          "examples": [
+              "pashathecoder"
+          ]
+      },
+      "password": {
+          "type": "string",
+          "default": "",
+          "title": "The password Schema",
+          "examples": [
+              "Iloveemily"
+          ]
+      },
+      "fullName": {
+          "type": "string",
+          "default": "",
+          "title": "The fullName Schema",
+          "examples": [
+              "Pasha Loguinov"
+          ]
+      },
+      "email": {
+          "type": "string",
+          "default": "",
+          "title": "The email Schema",
+          "examples": [
+              "pasha.log@gmail.com"
+          ]
+      },
+      "profileImageURL": {
+          "type": "string",
+          "default": "./public/images/default-pic.png",
+          "title": "The profileImageURL Schema",
+          "examples": [
+              "https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-19/133861693_405576800658090_4354625989364868756_n.jpg?stp=dst-jpg_s320x320\u0026_nc_ht=scontent-sjc3-1.cdninstagram.com\u0026_nc_cat=106\u0026_nc_ohc=9xobDKLuP6wAX-X3xyP\u0026edm=AOQ1c0wBAAAA\u0026ccb=7-5\u0026oh=00_AfDogN8JA7hwsastJzxmYno0c29nLekJ3Fh-psIumQ-pcg\u0026oe=64161E00\u0026_nc_sid=8fd12b"
+          ]
+      },
+      "bio": {
+          "type": "string",
+          "default": "",
+          "title": "The bio Schema",
+          "examples": [
+              "Welcome to my profile. Hello World U+1F30E."
+          ]
+      }
+  },
+  "examples": [{
+      "username": "pashathecoder",
+      "password": "Iloveemily",
+      "fullName": "Pasha Loguinov",
+      "email": "pasha.log@gmail.com",
+      "profileImageURL": "https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-19/133861693_405576800658090_4354625989364868756_n.jpg?stp=dst-jpg_s320x320\u0026_nc_ht=scontent-sjc3-1.cdninstagram.com\u0026_nc_cat=106\u0026_nc_ohc=9xobDKLuP6wAX-X3xyP\u0026edm=AOQ1c0wBAAAA\u0026ccb=7-5\u0026oh=00_AfDogN8JA7hwsastJzxmYno0c29nLekJ3Fh-psIumQ-pcg\u0026oe=64161E00\u0026_nc_sid=8fd12b",
+      "bio": "Welcome to my profile. Hello World U+1F30E."
+  }]
+}
