@@ -2,9 +2,11 @@
 
 /** Routes for users. */
 
+const jsonschema = require('jsonschema');
 const express = require('express');
-const { ensureCorrectUser } = require('../middleware/auth');
-// const { BadRequestError } = require('../expressError');
+const { ensureLoggedIn } = require('../middleware/auth');
+const userUpdateSchema = require('../schemas/userUpdate.json');
+const { BadRequestError } = require('../expressError');
 const User = require('../models/user');
 
 /** AWS S3 dependencies */
@@ -65,11 +67,9 @@ router.post('/upload', upload.single('single'), async (req, res, next) => {
 
 // Post route for creating a post.
 
-router.post('/create', async (req, res, next) => {
-	console.log(req.body);
+router.post('/create', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const post = await User.createPost(req.body);
-		console.log(post);
 		return res.json({ post });
 	} catch (err) {
 		return next(err);
@@ -78,7 +78,7 @@ router.post('/create', async (req, res, next) => {
 
 // Get route for getting all the comments of a single post.
 
-router.get('/comments/:postId', async (req, res, next) => {
+router.get('/comments/:postId', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const comments = await User.getPostComments(req.params.postId);
 		return res.json({ comments });
@@ -89,7 +89,7 @@ router.get('/comments/:postId', async (req, res, next) => {
 
 // Post route for creating a comment.
 
-router.post('/comment', async (req, res, next) => {
+router.post('/comment', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const comment = await User.comment(req.body);
 		return res.json({ comment });
@@ -100,7 +100,7 @@ router.post('/comment', async (req, res, next) => {
 
 // Post route for following another user.
 
-router.post('/follow', async (req, res, next) => {
+router.post('/follow', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const follow = await User.follow(req.body.usernameFollowing, req.body.usernameBeingFollowed);
 		console.log(follow);
@@ -112,7 +112,7 @@ router.post('/follow', async (req, res, next) => {
 
 // Post route for unfollowing another user.
 
-router.post('/unfollow', async (req, res, next) => {
+router.post('/unfollow', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const unfollow = await User.unfollow(req.body.usernameUnfollowing, req.body.usernameBeingUnfollowed);
 		console.log(unfollow);
@@ -135,7 +135,7 @@ router.get('/', async (req, res, next) => {
 
 // Get route for getting all a user's follower's posts for the homepage feed.
 
-router.get('/:username/followerPosts/', async (req, res, next) => {
+router.get('/:username/followerPosts/', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const posts = await User.getAllUserFollowerPosts(req.params.username);
 		return res.json({ posts });
@@ -146,7 +146,7 @@ router.get('/:username/followerPosts/', async (req, res, next) => {
 
 // Post route for liking a post or comment.
 
-router.post('/like', async (req, res, next) => {
+router.post('/like', ensureLoggedIn, async (req, res, next) => {
 	try {
 		console.log(req.body);
 		const like = await User.like(req.body.username, req.body.commentOrPostId, req.body.likeType);
@@ -159,7 +159,7 @@ router.post('/like', async (req, res, next) => {
 
 // Post route for unliking a post or comment.
 
-router.post('/unlike', async (req, res, next) => {
+router.post('/unlike', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const unlike = await User.unlike(req.body.username, req.body.commentOrPostId, req.body.likeType);
 		console.log(unlike);
@@ -171,8 +171,14 @@ router.post('/unlike', async (req, res, next) => {
 
 // Patch route for updating a user's information.
 
-router.patch('/:username', async (req, res, next) => {
+router.patch('/:username', ensureLoggedIn, async (req, res, next) => {
 	try {
+		const validator = jsonschema.validate(req.body, userUpdateSchema);
+		if (!validator.valid) {
+			const errs = validator.errors.map((e) => e.stack);
+			throw new BadRequestError(errs);
+		}
+
 		const user = await User.update(req.params.username, req.body);
 		return res.json({ user });
 	} catch (err) {
