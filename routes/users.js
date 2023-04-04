@@ -2,12 +2,11 @@
 
 /** Routes for users. */
 
-const jsonschema = require('jsonschema');
 const express = require('express');
 const { ensureLoggedIn } = require('../middleware/auth');
 const userUpdateSchema = require('../schemas/userUpdate.json');
-const { BadRequestError } = require('../expressError');
 const User = require('../models/user');
+const { schemaValidator } = require('../helpers/schemaValidator');
 
 /** AWS S3 dependencies */
 require('aws-sdk/lib/maintenance_mode_message').suppress = true;
@@ -173,11 +172,7 @@ router.post('/unlike', ensureLoggedIn, async (req, res, next) => {
 
 router.patch('/:username', ensureLoggedIn, async (req, res, next) => {
 	try {
-		const validator = jsonschema.validate(req.body, userUpdateSchema);
-		if (!validator.valid) {
-			const errs = validator.errors.map((e) => e.stack);
-			throw new BadRequestError(errs);
-		}
+		schemaValidator(req.body, userUpdateSchema);
 
 		const user = await User.update(req.params.username, req.body);
 		return res.json({ user });
