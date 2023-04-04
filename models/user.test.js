@@ -486,3 +486,144 @@ describe('getting all of specific user comments', function() {
 		});
 	});
 });
+
+/************************************** getPostComments */
+
+describe("getting a post's comments and recursively show children", function() {
+	test('works for post 4', async function() {
+		const newPost = {
+			postURL: 'https://fake-url.com',
+			caption: 'a new post by me, u1',
+			watermark: null,
+			watermarkFont: null,
+			filter: null,
+			username: 'u1'
+		};
+		// id 3
+		const newComment1 = {
+			username: 'u2',
+			postId: 4,
+			parentId: -1,
+			message: 'another nice post, u1!'
+		};
+		// id 4
+		const newComment2 = {
+			username: 'u3',
+			postId: 4,
+			parentId: -1,
+			message: 'yeah, u1, what a great post!'
+		};
+		// id 5
+		const newComment3 = {
+			username: 'u1',
+			postId: 4,
+			parentId: 3,
+			message: 'child of comment_id 3'
+		};
+		// id 6
+		const newComment4 = {
+			username: 'u1',
+			postId: 4,
+			parentId: 4,
+			message: 'child of comment_id 4'
+		};
+		// id 7
+		const newComment5 = {
+			username: 'u2',
+			postId: 4,
+			parentId: 5,
+			message: 'child of comment_id 5'
+		};
+
+		await User.createPost({ ...newPost });
+		await User.comment({ ...newComment1 });
+		await User.comment({ ...newComment2 });
+		await User.comment({ ...newComment3 });
+		await User.comment({ ...newComment4 });
+		await User.comment({ ...newComment5 });
+
+		const postComments = await User.getPostComments(4);
+		expect(postComments).toEqual({
+			postId: 4,
+			comments: [
+				{
+					commentId: 3,
+					parentId: null,
+					message: 'another nice post, u1!',
+					username: 'u2',
+					children: [
+						{
+							commentId: 4,
+							parentId: 3,
+							message: 'child of comment_id 3',
+							username: 'u1'
+						},
+						{
+							commentId: 7,
+							parentId: 5,
+							message: 'child of comment_id 5',
+							username: 'u2'
+						}
+					]
+				},
+				{
+					commentId: 4,
+					parentId: null,
+					message: 'nice post, u1!',
+					username: 'u3',
+					children: [
+						{
+							commentId: 6,
+							parentId: 4,
+							message: 'child of comment_id 4',
+							username: 'u1'
+						}
+					]
+				}
+			]
+		});
+		// expect(postId).toEqual({
+		// 	postId: 1,
+		// 	comments: [
+		// 		{
+		// 			commentId: 1,
+		// 			parentId: -1,
+		// 			message: 'nice post, u1!',
+		// 			username: 'u2',
+		// 			children: [
+		// 				{
+		// 					commentId: 4,
+		// 					parentId: 1,
+		// 					message: 'child of comment_id 1',
+		// 					username: 'u1',
+		// 					children: [
+		// 						{
+		// 							commentId: 6,
+		// 							parentId: 4,
+		// 							message: 'child of comment_id 4',
+		// 							username: 'u2',
+		// 							children: []
+		// 						}
+		// 					]
+		// 				}
+		// 			]
+		// 		},
+		// 		{
+		// 			commentId: 3,
+		// 			parentId: -1,
+		// 			message: 'nice post, u1!',
+		// 			username: 'u3',
+		// 			children: [
+		// 				{
+		// 					commentId: 5,
+		// 					parentId: 3,
+		// 					message: 'child of comment_id 3',
+		// 					username: 'u1',
+		// 					children: []
+		// 				}
+		// 			]
+		// 		}
+		// 	]
+		// });
+	});
+});

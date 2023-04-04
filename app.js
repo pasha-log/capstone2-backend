@@ -4,10 +4,10 @@ const cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const { authenticateJWT } = require('./middleware/auth');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
-
+require('dotenv').config();
 var app = express();
 
 app.use(cors());
@@ -17,27 +17,51 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(authenticateJWT);
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRoutes);
 app.use('/users', usersRoutes);
+app.use(express.static('public'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
 	next(createError(404));
 });
 
-// error handler
+/** Generic error handler; anything unhandled goes here. */
 app.use(function(err, req, res, next) {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
+	if (process.env.NODE_ENV !== 'test') console.error(err.stack);
+	const status = err.status || 500;
+	const message = err.message;
 
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
+	return res.status(status).json({
+		error: { message, status }
+	});
+});
+
+app.use((error, req, res, next) => {
+	if (error instanceof multer.MulterError) {
+		if (error.code === 'LIMIT_FILE_SIZE') {
+			return res.status(400).json({
+				message: 'File is too large'
+			});
+		}
+
+		if (error.code === 'LIMIT_FIELD_COUNT') {
+			return res.status(400).json({
+				message: 'File limit reached'
+			});
+		}
+
+		if (error.code === 'LIMIT_UNEXPECTED_FILE') {
+			return res.status(400).json({
+				message: 'File must be an image'
+			});
+		}
+	}
 });
 
 module.exports = app;

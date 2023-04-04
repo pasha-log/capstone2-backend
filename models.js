@@ -1,3 +1,5 @@
+// This was my Sequelize version for the models of this project
+
 require('dotenv').config();
 const password = process.env.UBUNTU_PASSWORD;
 

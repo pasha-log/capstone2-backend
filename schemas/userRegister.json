@@ -7,13 +7,13 @@
       "username",
       "password",
       "fullName",
-      "email",
-      "bio"
+      "email"
   ],
   "properties": {
       "username": {
           "type": "string",
-          "default": "",
+          "minLength": 1,
+          "maxLength": 30,
           "title": "The username Schema",
           "examples": [
               "pashathecoder"
@@ -21,7 +21,8 @@
       },
       "password": {
           "type": "string",
-          "default": "",
+          "minLength": 5,
+          "maxLength": 20,
           "title": "The password Schema",
           "examples": [
               "Iloveemily"
@@ -29,7 +30,8 @@
       },
       "fullName": {
           "type": "string",
-          "default": "",
+          "minLength": 1,
+          "maxLength": 30,
           "title": "The fullName Schema",
           "examples": [
               "Pasha Loguinov"
@@ -37,26 +39,11 @@
       },
       "email": {
           "type": "string",
-          "default": "",
+          "minLength": 6,
+          "maxLength": 60,
           "title": "The email Schema",
           "examples": [
               "pasha.log@gmail.com"
-          ]
-      },
-      "profileImageURL": {
-          "type": "string",
-          "default": "./public/images/default-pic.png",
-          "title": "The profileImageURL Schema",
-          "examples": [
-              "https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-19/133861693_405576800658090_4354625989364868756_n.jpg?stp=dst-jpg_s320x320\u0026_nc_ht=scontent-sjc3-1.cdninstagram.com\u0026_nc_cat=106\u0026_nc_ohc=9xobDKLuP6wAX-X3xyP\u0026edm=AOQ1c0wBAAAA\u0026ccb=7-5\u0026oh=00_AfDogN8JA7hwsastJzxmYno0c29nLekJ3Fh-psIumQ-pcg\u0026oe=64161E00\u0026_nc_sid=8fd12b"
-          ]
-      },
-      "bio": {
-          "type": "string",
-          "default": "",
-          "title": "The bio Schema",
-          "examples": [
-              "Welcome to my profile. Hello World U+1F30E."
           ]
       }
   },
@@ -64,8 +51,6 @@
       "username": "pashathecoder",
       "password": "Iloveemily",
       "fullName": "Pasha Loguinov",
-      "email": "pasha.log@gmail.com",
-      "profileImageURL": "https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-19/133861693_405576800658090_4354625989364868756_n.jpg?stp=dst-jpg_s320x320\u0026_nc_ht=scontent-sjc3-1.cdninstagram.com\u0026_nc_cat=106\u0026_nc_ohc=9xobDKLuP6wAX-X3xyP\u0026edm=AOQ1c0wBAAAA\u0026ccb=7-5\u0026oh=00_AfDogN8JA7hwsastJzxmYno0c29nLekJ3Fh-psIumQ-pcg\u0026oe=64161E00\u0026_nc_sid=8fd12b",
-      "bio": "Welcome to my profile. Hello World U+1F30E."
+      "email": "pasha.log@gmail.com"
   }]
 }
