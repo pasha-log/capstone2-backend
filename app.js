@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 const cors = require('cors');
@@ -7,7 +8,6 @@ var logger = require('morgan');
 const { authenticateJWT } = require('./middleware/auth');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
-require('dotenv').config();
 var app = express();
 
 app.use(cors());

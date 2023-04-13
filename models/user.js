@@ -653,10 +653,11 @@ class User {
 			const commentChildrenRes = await db.query(
 				`WITH RECURSIVE children AS (
 					SELECT
-						comment_id AS "commentId",
-						parent_id AS "parentId",
+						comment_id,
+						parent_id,
 						message,
-						username
+						username,
+						created_at
 					FROM
 						comments
 					WHERE
@@ -666,10 +667,11 @@ class User {
 							c.comment_id,
 							c.parent_id,
 							c.message,
-							c.username
+							c.username,
+							c.created_at
 						FROM
 							comments c
-						INNER JOIN children ON c.comment_id = c.parent_id
+						INNER JOIN children ch ON ch.comment_id = c.parent_id
 				)
 				SELECT
 					*
@@ -678,6 +680,17 @@ class User {
 				[ comment.commentId ]
 			);
 
+			// get number of likes each child comment has
+			for (let comment of commentChildrenRes.rows.slice(1)) {
+				const commentChildrenLikesRes = await db.query(
+					`SELECT COUNT(*)
+					FROM comment_likes
+					WHERE comment_id = $1`,
+					[ comment.commentId ]
+				);
+
+				comment.numLikes = commentChildrenLikesRes.rows[0].count;
+			}
 			comment.children = commentChildrenRes.rows.slice(1);
 		}
 
