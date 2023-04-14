@@ -1,4 +1,7 @@
+'use strict';
+
 const db = require('../db.js');
+const { createToken } = require('../helpers/tokens');
 
 async function commonBeforeEach() {
 	await db.query('BEGIN');
@@ -10,12 +13,15 @@ async function commonAfterEach() {
 
 async function commonAfterAll() {
 	await db.end();
-	// await db.query('DROP DATABASE instapost_test');
 }
 
+const u1Token = createToken({ username: 'u1' });
+const u2Token = createToken({ username: 'u2' });
+
 module.exports = {
-	// commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
-	commonAfterAll
+	commonAfterAll,
+	u1Token,
+	u2Token
 };

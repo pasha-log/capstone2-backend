@@ -41,6 +41,7 @@
           "type": "string",
           "minLength": 6,
           "maxLength": 60,
+          "format": "email",
           "title": "The email Schema",
           "examples": [
               "pasha.log@gmail.com"

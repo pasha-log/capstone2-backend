@@ -27,6 +27,7 @@
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.29.1",
+    "supertest": "^6.3.3",
     "uuidv4": "^6.2.13"
   },
   "description": "## Database Schema",
