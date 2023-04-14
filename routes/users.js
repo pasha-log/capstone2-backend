@@ -3,7 +3,7 @@
 /** Routes for users. */
 
 const express = require('express');
-const { ensureLoggedIn } = require('../middleware/auth');
+const { ensureLoggedIn, authenticateJWT, ensureCorrectUser } = require('../middleware/auth');
 const userUpdateSchema = require('../schemas/userUpdate.json');
 const User = require('../models/user');
 const { schemaValidator } = require('../helpers/schemaValidator');
@@ -18,7 +18,7 @@ const router = express.Router();
 
 /** GET /[username] => { user }
  *
- * Returns { username, fullName, email, profileImageURL, bio, posts, postLikes }
+ * Returns { username, fullName, email, profileImageURL, bio, posts, postLikes, commentLikes, following, followers }
  *   where posts is [{ postId, postURL, caption, watermark, filter, createdAt }, ...]
  *   where postLikes is [{ postId, username, postURL, caption, watermark, filter, createdAt }, ...]
  *   where following is [{username, fullName, profileImageURL}, ...]
@@ -27,7 +27,7 @@ const router = express.Router();
  * Authorization required: same user-as-:username
  **/
 
-router.get('/:username', async (req, res, next) => {
+router.get('/:username', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const user = await User.get(req.params.username);
 		return res.json({ user });

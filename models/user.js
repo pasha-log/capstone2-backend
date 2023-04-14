@@ -114,7 +114,7 @@ class User {
 
 	/** Given a username, return data about user.
    *
-   * Returns { username, fullName, email, profileImageURL, bio, posts, postLikes }
+   * Returns { username, fullName, email, profileImageURL, bio, posts, postLikes, commentLikes, following, followers }
    *   where posts are [{ postId, postURL, caption, watermark, filter, createdAt }, ...]
    *   where postLikes are [{ postId, username, postURL, caption, watermark, filter, createdAt }, ...]
    *   where commentLikes are [{ commentId, username, message, createdAt, postId }, ...]

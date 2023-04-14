@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 const { BCRYPT_WORK_FACTOR } = require('../config');
 const { commonBeforeEach, commonAfterEach, commonAfterAll } = require('./_testCommon');
 
-// beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
