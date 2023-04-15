@@ -147,9 +147,7 @@ router.get('/:username/followerPosts/', ensureLoggedIn, async (req, res, next) =
 
 router.post('/like', ensureLoggedIn, async (req, res, next) => {
 	try {
-		console.log(req.body);
 		const like = await User.like(req.body.username, req.body.commentOrPostId, req.body.likeType);
-		console.log(like);
 		return res.json({ status: 'success' });
 	} catch (err) {
 		return next(err);
@@ -161,7 +159,6 @@ router.post('/like', ensureLoggedIn, async (req, res, next) => {
 router.post('/unlike', ensureLoggedIn, async (req, res, next) => {
 	try {
 		const unlike = await User.unlike(req.body.username, req.body.commentOrPostId, req.body.likeType);
-		console.log(unlike);
 		return res.json({ status: 'success' });
 	} catch (err) {
 		return next(err);
