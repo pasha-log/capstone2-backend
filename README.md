@@ -8,20 +8,26 @@ This is the Express backend for [Instapost Frontend](https://github.com/pasha-lo
 
 ## Tools used: 
 
-* [Express Generator](https://www.npmjs.com/package/express-generator)
-* [Postgresql](https://www.postgresql.org/)
+* Application skeleton: [Express Generator](https://www.npmjs.com/package/express-generator)
+* RDBMS: [Postgresql](https://www.postgresql.org/)
 * Authentication/validation: [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [JSON Web Token](https://jwt.io/), [JSON Schema](https://json-schema.org/)
-* [AWS SDK](https://aws.amazon.com/sdk-for-javascript/)
-* [Multer S3](https://www.npmjs.com/package/multer-s3)
-* [Nodemon](https://www.npmjs.com/package/nodemon)
-* [Morgan](https://www.npmjs.com/package/morgan)
-* [CORS](https://www.npmjs.com/package/cors)
-* [Colors](https://www.npmjs.com/package/colors) 
+* Image file data marshaling: [AWS SDK](https://aws.amazon.com/sdk-for-javascript/)
+* Storage engine for AWS S3: [Multer S3](https://www.npmjs.com/package/multer-s3)
+* Auto-update utility: [Nodemon](https://www.npmjs.com/package/nodemon)
+* Logger middleware: [Morgan](https://www.npmjs.com/package/morgan)
+* Cross-origin resource sharing: [CORS](https://www.npmjs.com/package/cors)
+* Terminal styling: [Colors](https://www.npmjs.com/package/colors) 
+* Testing framework: [Jest](https://www.npmjs.com/package/jest)
+* HTTP server testing: [SuperTest](https://www.npmjs.com/package/supertest)
 
 ## Getting started
 
 Install all dependencies with `npm i`  
 The project uses PostgreSQL as its RDBMS.  
+Make sure to create and seed databases with this command: 
+
+    psql < instapost.sql 
+
 To run this project:
     
     nodemon server.js
