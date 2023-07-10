@@ -686,7 +686,7 @@ class User {
 					`SELECT COUNT(*)
 					FROM comment_likes
 					WHERE comment_id = $1`,
-					[ comment.commentId ]
+					[ comment.comment_id ]
 				);
 
 				comment.numLikes = commentChildrenLikesRes.rows[0].count;
