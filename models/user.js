@@ -408,6 +408,29 @@ class User {
 		return post;
 	}
 
+	/** Delete a post by the user: delete from posts table, returns "postDeletion: success".
+	*	
+	**/
+
+	static async deletePost({ postId }) {
+		const postRes = await db.query(
+			`SELECT * 
+			FROM posts
+			WHERE post_id = $1`,
+			[ postId ]
+		);
+
+		if (!postRes.rows[0]) throw new NotFoundError(`No post: ${postId}`);
+
+		const result = await db.query(
+			`DELETE FROM posts
+			WHERE post_id = $1`,
+			[ postId ]
+		);
+
+		return result.rows[0];
+	}
+
 	/** Like a comment or a post.
 	* 
 	* Specify if comment or post through likeType={}

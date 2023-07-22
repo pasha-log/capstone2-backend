@@ -178,4 +178,16 @@ router.patch('/:username', ensureLoggedIn, async (req, res, next) => {
 	}
 });
 
+// Delete route for deleting a user's post.
+
+router.delete('/deletePost', ensureLoggedIn, async (req, res, next) => {
+	try {
+		console.log(req.body);
+		const postDeletion = await User.deletePost(req.body);
+		return res.json({ postDeletion });
+	} catch (err) {
+		return next(err);
+	}
+});
+
 module.exports = router;
