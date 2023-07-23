@@ -11,6 +11,7 @@ CREATE TABLE users (
 CREATE TABLE posts (
   post_id SERIAL PRIMARY KEY,
   post_url TEXT NOT NULL,
+  post_key TEXT NOT NULL,
   caption VARCHAR(2200) DEFAULT NULL, 
   watermark VARCHAR(35) DEFAULT NULL,
   watermark_font VARCHAR(35) DEFAULT NULL,

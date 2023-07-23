@@ -143,6 +143,7 @@ class User {
 		const postsRes = await db.query(
 			`SELECT post_id AS "postId", 
                 post_url AS "postURL", 
+				post_key AS "postKey",
                 caption, watermark, filter, 
                 created_at AS "createdAt"
             FROM posts
@@ -374,7 +375,7 @@ class User {
 	*  Returns {postId, postURL, caption, watermark, filter, createdAt, username}
 	**/
 
-	static async createPost({ username, postURL, caption, watermark, watermarkFont, filter }) {
+	static async createPost({ username, postURL, postKey, caption, watermark, watermarkFont, filter }) {
 		const userRes = await db.query(
 			`SELECT username,
 		          full_name AS "fullName",
@@ -397,11 +398,12 @@ class User {
 			watermark,
 			watermark_font,
 			filter,
-			post_url
+			post_url,
+			post_key
 			)
-			VALUES ($1, $2, $3, $4, $5, $6)
-			RETURNING post_id AS "postId", post_url AS "postURL", caption, watermark, watermark_font AS "watermarkFont", filter, created_at AS "createdAt", username`,
-			[ username, caption, watermark, watermarkFont, filter, postURL ]
+			VALUES ($1, $2, $3, $4, $5, $6, $7)
+			RETURNING post_id AS "postId", post_url AS "postURL", caption, watermark, watermark_font AS "watermarkFont", filter, created_at AS "createdAt", username, post_key AS "postKey"`,
+			[ username, caption, watermark, watermarkFont, filter, postURL, postKey ]
 		);
 
 		const post = result.rows[0];
@@ -577,6 +579,7 @@ class User {
 		const postRes = await db.query(
 			`SELECT post_id AS "postId",
             post_url AS "postURL",
+			post_key AS "postKey",
             caption,
             watermark,
             watermark_font AS "watermarkFont",

@@ -11,7 +11,7 @@ const { schemaValidator } = require('../helpers/schemaValidator');
 /** AWS S3 dependencies */
 require('aws-sdk/lib/maintenance_mode_message').suppress = true;
 const multer = require('multer');
-const { s3Uploadv2 } = require('../s3Service');
+const { s3Uploadv2, s3Delete } = require('../s3Service');
 require('dotenv').config();
 
 const router = express.Router();
@@ -58,6 +58,7 @@ router.post('/upload', upload.single('single'), async (req, res, next) => {
 	try {
 		const file = req.file;
 		const result = await s3Uploadv2(file);
+		console.log(result);
 		res.json({ status: 'success', result });
 	} catch (err) {
 		return next(err);
@@ -182,9 +183,9 @@ router.patch('/:username', ensureLoggedIn, async (req, res, next) => {
 
 router.delete('/deletePost', ensureLoggedIn, async (req, res, next) => {
 	try {
-		console.log(req.body);
+		await s3Delete(req.body.postKey);
 		const postDeletion = await User.deletePost(req.body);
-		return res.json({ postDeletion });
+		return res.json({ postDeletion, status: 'success' });
 	} catch (err) {
 		return next(err);
 	}
