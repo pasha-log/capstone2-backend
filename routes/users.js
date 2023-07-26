@@ -191,4 +191,15 @@ router.delete('/deletePost', ensureLoggedIn, async (req, res, next) => {
 	}
 });
 
+// Delete a file only from S3 bucket in caption form phase discard scenario.
+
+router.delete('/deleteS3File', ensureLoggedIn, async (req, res, next) => {
+	try {
+		await s3Delete(req.body.key);
+		return res.json({ status: 'success' });
+	} catch (err) {
+		return next(err);
+	}
+});
+
 module.exports = router;
