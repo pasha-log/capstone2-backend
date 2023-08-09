@@ -5,8 +5,8 @@ const { PORT } = require('./config');
 
 // const server = require('http').createServer(app);
 
+var express = require('express');
 const INDEX = '/index.html';
-
 const server = express();
 
 server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
