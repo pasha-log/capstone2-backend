@@ -3,6 +3,34 @@
 const app = require('./app');
 const { PORT } = require('./config');
 
-app.listen(PORT, function() {
+const server = require('http').createServer(app);
+
+const io = require('socket.io')(server, {
+	cors: {
+		origin: '*',
+		methods: [ 'GET', 'POST' ],
+		allowedHeaders: [ 'my-custom-header' ],
+		credentials: 'true'
+	}
+});
+
+server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
+});
+
+io.on('connection', (socket) => {
+	const username = socket.handshake.query.username;
+	socket.join(username);
+
+	socket.on('send-message', ({ recipients, text }) => {
+		recipients.forEach((recipient) => {
+			const newRecipients = recipients.filter((r) => r !== recipient);
+			newRecipients.push(username);
+			socket.broadcast.to(recipient).emit('receive-message', {
+				recipients: newRecipients,
+				sender: username,
+				text
+			});
+		});
+	});
 });

@@ -9,7 +9,9 @@ const { authenticateJWT } = require('./middleware/auth');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 var app = express();
+const helmet = require('helmet');
 
+app.use(helmet());
 app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
