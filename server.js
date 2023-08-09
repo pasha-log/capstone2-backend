@@ -5,7 +5,7 @@ const { PORT } = require('./config');
 
 const server = require('http').createServer(app);
 
-const INDEX = '/index.html';
+// const INDEX = '/index.html';
 
 const io = require('socket.io')(server, {
 	cors: {
@@ -17,9 +17,12 @@ const io = require('socket.io')(server, {
 	}
 });
 
-server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
 });
+// server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
+// 	console.log(`Started on http://localhost:${PORT}`);
+// });
 
 io.on('connection', (socket) => {
 	const username = socket.handshake.query.username;
