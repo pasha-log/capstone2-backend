@@ -7,7 +7,7 @@ const { PORT } = require('./config');
 
 // attempt at a solution
 // var express = require('express');
-const INDEX = 'index.html';
+const INDEX = '/index.html';
 // const server = express()
 const server = require('http').createServer(app);
 
@@ -30,7 +30,7 @@ server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
 });
 
-app.get('/', (req, res) => {
+server.use('/', (req, res) => {
 	res.sendFile(INDEX, { root: __dirname });
 });
 
