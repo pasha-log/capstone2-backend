@@ -11,7 +11,7 @@ const INDEX = '/index.html';
 // const server = express()
 // const server = require('http').createServer(app);
 
-server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
+server.get('/', (req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
 	console.log(`Listening on ${PORT}`);
 });
 // attempt at a solution
