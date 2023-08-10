@@ -30,7 +30,7 @@ server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
 });
 
-server.use('/', (req, res) => {
+server.use((req, res) => {
 	res.sendFile(INDEX, { root: __dirname });
 });
 
