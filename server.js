@@ -7,7 +7,7 @@ const { PORT } = require('./config');
 
 // attempt at a solution
 // var express = require('express');
-const INDEX = './index.html';
+const INDEX = 'index.html';
 // const server = express()
 const server = require('http').createServer(app);
 
