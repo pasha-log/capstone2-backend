@@ -6,9 +6,10 @@ const { PORT } = require('./config');
 // const server = require('http').createServer(app);
 
 // attempt at a solution
-var express = require('express');
+// var express = require('express');
 const INDEX = './index.html';
-const server = express();
+// const server = express()
+const server = require('http').createServer(app);
 
 // server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
 // 	console.log(`Listening on ${PORT}`);
