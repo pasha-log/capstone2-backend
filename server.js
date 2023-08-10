@@ -7,13 +7,13 @@ const server = require('http').createServer(app);
 
 // attempt at a solution
 // var express = require('express');
-// const INDEX = '/index.html';
+const INDEX = '/index.html';
 // const server = express()
 // const server = require('http').createServer(app);
 
-// server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
-// 	console.log(`Listening on ${PORT}`);
-// });
+server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
+	console.log(`Listening on ${PORT}`);
+});
 // attempt at a solution
 
 const io = require('socket.io')(server, {
@@ -26,12 +26,8 @@ const io = require('socket.io')(server, {
 	}
 });
 
-server.listen(PORT, () => {
-	console.log(`Started on http://localhost:${PORT}`);
-});
-
-// app.use((req, res) => {
-// 	res.sendFile(INDEX, { root: __dirname });
+// server.listen(PORT, () => {
+// 	console.log(`Started on http://localhost:${PORT}`);
 // });
 
 io.on('connection', (socket) => {
