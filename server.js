@@ -3,13 +3,13 @@
 const app = require('./app');
 const { PORT } = require('./config');
 
-// const server = require('http').createServer(app);
+const server = require('http').createServer(app);
 
 // attempt at a solution
 // var express = require('express');
-const INDEX = '/index.html';
+// const INDEX = '/index.html';
 // const server = express()
-const server = require('http').createServer(app);
+// const server = require('http').createServer(app);
 
 // server.use((req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
 // 	console.log(`Listening on ${PORT}`);
@@ -30,9 +30,9 @@ server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
 });
 
-server.use((req, res) => {
-	res.sendFile(INDEX, { root: __dirname });
-});
+// app.use((req, res) => {
+// 	res.sendFile(INDEX, { root: __dirname });
+// });
 
 io.on('connection', (socket) => {
 	const username = socket.handshake.query.username;
