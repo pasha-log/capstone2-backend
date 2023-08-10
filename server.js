@@ -6,7 +6,7 @@ const { PORT } = require('./config');
 const server = require('http').createServer(app);
 
 // attempt at a solution
-// var express = require('express');
+var express = require('express');
 // const INDEX = '/index.html';
 // const server = express()
 // const server = require('http').createServer(app);
@@ -25,6 +25,8 @@ const io = require('socket.io')(server, {
 		credentials: 'true'
 	}
 });
+
+app.use(express.static(__dirname));
 
 server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
