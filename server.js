@@ -11,12 +11,6 @@ const server = require('http').createServer(app);
 // var express = require('express');
 // attempt at a solution
 
-const INDEX = '/index.html';
-
-server
-	.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-	.listen(PORT, () => console.log(`Listening on ${PORT}`));
-
 const io = require('socket.io')(server, {
 	cors: {
 		// origin: '*',
@@ -35,9 +29,9 @@ const io = require('socket.io')(server, {
 // 	});
 // }
 
-// server.listen(PORT, () => {
-// 	console.log(`Started on http://localhost:${PORT}`);
-// });
+server.listen(PORT, () => {
+	console.log(`Started on http://localhost:${PORT}`);
+});
 
 io.on('connection', (socket) => {
 	const username = socket.handshake.query.username;
