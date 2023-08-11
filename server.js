@@ -5,7 +5,7 @@ const { PORT } = require('./config');
 
 // const server = require('http').createServer(app);
 
-// require('dotenv').config();
+require('dotenv').config();
 
 // attempt at a solution
 // var express = require('express');
@@ -50,16 +50,29 @@ const { PORT } = require('./config');
 // 	});
 // });
 
-const socketIO = require('socket.io');
+const express = require('express');
 
-const INDEX = '/index.html';
+if (process.env.NODE_ENV === 'production') {
+	// Set static folder
+	app.use(express.static('./client/build'));
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
-const server = require('http')
-	.createServer(app)
-	.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-	.listen(PORT, () => console.log(`Listening on ${PORT}`));
+server.listen(PORT, () => {
+	console.log(`Started on http://localhost:${PORT}`);
+});
 
-const io = socketIO(server);
+const io = require('socket.io')(server, {
+	cors: {
+		origin: '*',
+		// origin: 'https://instapost.herokuapp.com',
+		methods: [ 'GET', 'POST' ],
+		allowedHeaders: [ 'my-custom-header' ],
+		credentials: 'true'
+	}
+});
 
 io.on('connection', (socket) => {
 	const username = socket.handshake.query.username;
