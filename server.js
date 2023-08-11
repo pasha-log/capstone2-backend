@@ -1,19 +1,19 @@
 'use strict';
 
-const app = require('./app');
+// const app = require('./app');
 const { PORT } = require('./config');
 
-const server = require('http').createServer(app);
+// const server = require('http').createServer(app);
 
 // require('dotenv').config();
 
 // attempt at a solution
-// var express = require('express');
+var express = require('express');
 // attempt at a solution
 
 const INDEX = '/index.html';
 
-server
+const server = express()
 	.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
 	.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
