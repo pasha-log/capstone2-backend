@@ -18,8 +18,8 @@ var express = require('express');
 
 const io = require('socket.io')(server, {
 	cors: {
-		origin: '*',
-		// origin: 'https://instapost.herokuapp.com',
+		// origin: '*',
+		origin: 'https://instapost.herokuapp.com',
 		methods: [ 'GET', 'POST' ],
 		allowedHeaders: [ 'my-custom-header' ],
 		credentials: 'true'
