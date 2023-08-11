@@ -5,6 +5,8 @@ const { PORT } = require('./config');
 
 const server = require('http').createServer(app);
 
+require('dotenv').config();
+
 // attempt at a solution
 var express = require('express');
 // const INDEX = '/index.html';
@@ -26,7 +28,7 @@ const io = require('socket.io')(server, {
 	}
 });
 
-app.use(express.static(__dirname));
+// app.use(express.static(__dirname));
 
 server.listen(PORT, () => {
 	console.log(`Started on http://localhost:${PORT}`);
@@ -48,6 +50,14 @@ io.on('connection', (socket) => {
 		});
 	});
 });
+
+if (process.env.NODE_ENV === 'production') {
+	// Set static folder
+	app.use(express.static('./client/build'));
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 // const PORT = process.env.PORT || 3000
 // const INDEX = './index.html'
