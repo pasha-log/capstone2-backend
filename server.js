@@ -4,6 +4,7 @@ const app = require('./app');
 const { PORT } = require('./config');
 
 const server = require('http').createServer(app);
+app.set('trust proxy', 1);
 
 require('dotenv').config();
 
@@ -66,8 +67,10 @@ server.listen(PORT, () => {
 
 const io = require('socket.io')(server, {
 	cors: {
-		origin: '*'
-		// origin: 'https://instapost.herokuapp.com',
+		// origin: '*',
+		origin: 'https://instapost.herokuapp.com',
+		methods: [ 'GET', 'POST' ],
+		credentials: 'true'
 	}
 });
 
