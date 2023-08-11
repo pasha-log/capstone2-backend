@@ -3,7 +3,7 @@
 const app = require('./app');
 const { PORT } = require('./config');
 
-// const server = require('http').createServer(app);
+const server = require('http').createServer(app);
 
 require('dotenv').config();
 
