@@ -68,7 +68,7 @@ server.listen(PORT, () => {
 const io = require('socket.io')(server, {
 	cors: {
 		// origin: '*',
-		origin: 'https://instapost.herokuapp.com',
+		origin: 'https://pasha-log-instapost.surge.sh',
 		methods: [ 'GET', 'POST' ],
 		credentials: 'true'
 	}
