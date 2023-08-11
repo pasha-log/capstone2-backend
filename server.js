@@ -5,20 +5,19 @@ const { PORT } = require('./config');
 
 const server = require('http').createServer(app);
 
-require('dotenv').config();
+// require('dotenv').config();
 
 // attempt at a solution
-var express = require('express');
-// const INDEX = '/index.html';
-// const server = express()
-// const server = require('http').createServer(app);
-
-// server.get('/', (req, res) => res.sendFile(INDEX, { root: __dirname })).listen(PORT, () => {
-// 	console.log(`Listening on ${PORT}`);
-// });
+// var express = require('express');
 // attempt at a solution
 
-const io = require('socket.io')(server, {
+const INDEX = '/index.html';
+
+server
+	.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+	.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = socketIO(server, {
 	cors: {
 		// origin: '*',
 		origin: 'https://instapost.herokuapp.com',
@@ -27,19 +26,27 @@ const io = require('socket.io')(server, {
 		credentials: 'true'
 	}
 });
+// const io = require('socket.io')(server, {
+// 	cors: {
+// 		// origin: '*',
+// 		origin: 'https://instapost.herokuapp.com',
+// 		methods: [ 'GET', 'POST' ],
+// 		allowedHeaders: [ 'my-custom-header' ],
+// 		credentials: 'true'
+// 	}
+// });
 
-// app.use(express.static(__dirname));
-if (process.env.NODE_ENV === 'production') {
-	// Set static folder
-	app.use(express.static('./client/build'));
-	app.get('*', (req, res) => {
-		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-	});
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	// Set static folder
+// 	app.use(express.static('./client/build'));
+// 	app.get('*', (req, res) => {
+// 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+// 	});
+// }
 
-server.listen(PORT, () => {
-	console.log(`Started on http://localhost:${PORT}`);
-});
+// server.listen(PORT, () => {
+// 	console.log(`Started on http://localhost:${PORT}`);
+// });
 
 io.on('connection', (socket) => {
 	const username = socket.handshake.query.username;
@@ -57,24 +64,3 @@ io.on('connection', (socket) => {
 		});
 	});
 });
-
-// const PORT = process.env.PORT || 3000
-// const INDEX = './index.html'
-
-// const socketIO = require('socket.io')
-// const express = require('express')
-
-// const app = express()
-// const server = app.listen(PORT, () => {
-//   console.log('SERVER LISTENING ON PORT http://localhost:3000')
-// })
-// const io = socketIO(server)
-
-// app.get('/', (req, res) => {
-//   res.sendFile(INDEX, { root: __dirname })
-// })
-
-// io.on('connection', (socket) => {
-//   console.log('Client connected')
-//   socket.on('disconnect', () => console.log('Client disconnected'))
-// })
