@@ -1,19 +1,19 @@
 'use strict';
 
-// const app = require('./app');
+const app = require('./app');
 const { PORT } = require('./config');
 
-// const server = require('http').createServer(app);
+const server = require('http').createServer(app);
 
 // require('dotenv').config();
 
 // attempt at a solution
-var express = require('express');
+// var express = require('express');
 // attempt at a solution
 
 const INDEX = '/index.html';
 
-const server = express()
+server
 	.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
 	.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
@@ -26,15 +26,6 @@ const io = require('socket.io')(server, {
 		credentials: 'true'
 	}
 });
-// const io = require('socket.io')(server, {
-// 	cors: {
-// 		// origin: '*',
-// 		origin: 'https://instapost.herokuapp.com',
-// 		methods: [ 'GET', 'POST' ],
-// 		allowedHeaders: [ 'my-custom-header' ],
-// 		credentials: 'true'
-// 	}
-// });
 
 // if (process.env.NODE_ENV === 'production') {
 // 	// Set static folder
