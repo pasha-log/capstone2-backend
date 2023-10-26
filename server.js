@@ -8,27 +8,15 @@ app.set('trust proxy', 1);
 
 require('dotenv').config();
 
-// attempt at a solution
-// var express = require('express');
-// attempt at a solution
-
+// WORKS FOR RUNNING LOCALLY
 // const io = require('socket.io')(server, {
 // 	cors: {
 // 		origin: '*',
-// 		// origin: 'https://instapost.herokuapp.com',
 // 		methods: [ 'GET', 'POST' ],
 // 		allowedHeaders: [ 'my-custom-header' ],
 // 		credentials: 'true'
 // 	}
 // });
-
-// if (process.env.NODE_ENV === 'production') {
-// 	// Set static folder
-// 	app.use(express.static('./client/build'));
-// 	app.get('*', (req, res) => {
-// 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-// 	});
-// }
 
 // server.listen(PORT, () => {
 // 	console.log(`Started on http://localhost:${PORT}`);
@@ -67,7 +55,6 @@ server.listen(PORT, () => {
 
 const io = require('socket.io')(server, {
 	cors: {
-		// origin: '*',
 		origin: 'https://pasha-log-instapost.surge.sh',
 		methods: [ 'GET', 'POST' ],
 		credentials: 'true'

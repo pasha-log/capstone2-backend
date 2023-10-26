@@ -66,4 +66,17 @@ app.use((error, req, res, next) => {
 	}
 });
 
+const _dirname = path.dirname('');
+const buildPath = path.join(_dirname, '../Unit50Capstone2Frontend/build');
+
+app.use(express.static(buildPath));
+
+app.get('/*', function(req, res) {
+	res.sendFile(path.join(_dirname, '../Unit50Capstone2Frontend/build/index.html'), function(err) {
+		if (err) {
+			res.status(500).send(err);
+		}
+	});
+});
+
 module.exports = app;
